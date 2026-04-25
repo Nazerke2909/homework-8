@@ -1,0 +1,62 @@
+@startuml
+title Template Method Pattern — Tower Floors
+
+abstract class TowerFloor {
+  + {final} explore(List<Hero>): FloorResult
+  # {abstract} getFloorName(): String
+  # {abstract} setup(List<Hero>): void
+  # {abstract} resolveChallenge(List<Hero>): FloorResult
+  # {abstract} awardLoot(List<Hero>, FloorResult): void
+  # announce(): void
+  # shouldAwardLoot(FloorResult): boolean
+  # cleanup(List<Hero>): void
+}
+
+class CombatFloor {
+  - floorName: String
+  - monster: Monster
+  + CombatFloor(String, Monster)
+  # getFloorName(): String
+  # setup(List<Hero>): void
+  # resolveChallenge(List<Hero>): FloorResult
+  # awardLoot(List<Hero>, FloorResult): void
+}
+
+class TrapFloor {
+  - floorName: String
+  - trapDamage: int
+  + TrapFloor(String, int)
+  # getFloorName(): String
+  # setup(List<Hero>): void
+  # resolveChallenge(List<Hero>): FloorResult
+  # shouldAwardLoot(FloorResult): boolean   (overridden)
+  # awardLoot(List<Hero>, FloorResult): void
+}
+
+class RestFloor {
+  - floorName: String
+  + RestFloor(String)
+  # getFloorName(): String
+  # announce(): void                         (overridden)
+  # setup(List<Hero>): void
+  # resolveChallenge(List<Hero>): FloorResult
+  # shouldAwardLoot(FloorResult): boolean   (overridden)
+  # awardLoot(List<Hero>, FloorResult): void
+}
+
+class BossFloor {
+  - floorName: String
+  - boss: Monster
+  + BossFloor(String, Monster)
+  # getFloorName(): String
+  # announce(): void                         (overridden)
+  # setup(List<Hero>): void
+  # resolveChallenge(List<Hero>): FloorResult
+  # awardLoot(List<Hero>, FloorResult): void
+}
+
+TowerFloor <|-- CombatFloor
+TowerFloor <|-- TrapFloor
+TowerFloor <|-- RestFloor
+TowerFloor <|-- BossFloor
+@enduml

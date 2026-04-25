@@ -1,0 +1,83 @@
+@startuml
+title State Pattern — Hero States
+
+interface HeroState {
+  + getName(): String
+  + modifyOutgoingDamage(int): int
+  + modifyIncomingDamage(int): int
+  + onTurnStart(Hero): void
+  + onTurnEnd(Hero): void
+  + canAct(): boolean
+}
+
+class NormalState {
+  + getName(): String
+  + modifyOutgoingDamage(int): int
+  + modifyIncomingDamage(int): int
+  + onTurnStart(Hero): void
+  + onTurnEnd(Hero): void
+  + canAct(): boolean
+}
+
+class PoisonedState {
+  - turnsLeft: int
+  + PoisonedState(int)
+  + getName(): String
+  + modifyOutgoingDamage(int): int
+  + modifyIncomingDamage(int): int
+  + onTurnStart(Hero): void
+  + onTurnEnd(Hero): void
+  + canAct(): boolean
+}
+
+class StunnedState {
+  - turnsLeft: int
+  + StunnedState(int)
+  + getName(): String
+  + modifyOutgoingDamage(int): int
+  + modifyIncomingDamage(int): int
+  + onTurnStart(Hero): void
+  + onTurnEnd(Hero): void
+  + canAct(): boolean
+}
+
+class BerserkState {
+  + getName(): String
+  + modifyOutgoingDamage(int): int
+  + modifyIncomingDamage(int): int
+  + onTurnStart(Hero): void
+  + onTurnEnd(Hero): void
+  + canAct(): boolean
+}
+
+class Hero {
+  - name: String
+  - hp: int
+  - maxHp: int
+  - attackPower: int
+  - defense: int
+  - currentState: HeroState
+  + Hero(String, int, int, int)
+  + getName(): String
+  + getHp(): int
+  + getMaxHp(): int
+  + getAttackPower(): int
+  + getDefense(): int
+  + isAlive(): boolean
+  + getState(): HeroState
+  + setState(HeroState): void
+  + takeDamage(int): void
+  + heal(int): void
+  + applyDamage(int): void
+  + getModifiedAttackPower(): int
+  + attack(Monster): void
+  + onTurnStart(): void
+  + onTurnEnd(): void
+}
+
+HeroState <|.. NormalState
+HeroState <|.. PoisonedState
+HeroState <|.. StunnedState
+HeroState <|.. BerserkState
+Hero --> HeroState : currentState
+@enduml
